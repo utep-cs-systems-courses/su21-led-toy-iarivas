@@ -2,67 +2,63 @@
 #include "stateMachines.h"
 #include "led.h"
 
-static char tdim = 0;
-static char tcnt = 0;
-static char temp = 0;
+static char gcount = 0;
+static char rcount = 0;
 
-char toggle_red()		/* always toggle! */
+void toggle_red()		/* always toggle! */
 {
-  switch (temp) {
+  switch (rcount) {
   case 0:
     red_on = 1;
-    temp = 1;
+    rcount = 1;
     break;
   case 1:
     red_on = 0;
-    temp = 0;
+    rcount = 0;
     break;
   }
   led_update();
-  return 1;
 }
 
-char toggle_red_dim()
+void toggle_red_dim()
 {
-  switch (temp) {
+  switch (rcount) {
   case 0:
     red_on = 1;
-    temp = 1;
+    rcount = 1;
     break;
   case 1:
     red_on = 0;
-    temp = 2;
+    rcount = 2;
     break;
   case 2:
     red_on = 0;
-    temp = 0;
+    rcount = 0;
     break;
   }
   led_update();
-  return 1;
 }
 
-char toggle_red_bright()
+void toggle_red_bright()
 {
-  switch(temp) {
+  switch(rcount) {
   case 0:
     red_on = 1;
-    temp = 1;
+    rcount = 1;
     break;
   case 1:
     red_on = 1;
-    temp = 2;
+    rcount = 2;
     break;
   case 2:
     red_on = 0;
-    temp = 0;
+    rcount = 0;
     break;
   }
   led_update();
-  return 1; 
 }
 
-char toggle_red_off()
+void toggle_red_off()
 {
   red_on = 0;
   led_update();
@@ -82,6 +78,83 @@ void red_dim(int level)
     break;
   case 3:
     toggle_red_off();
+    break;
+  }
+}
+
+void toggle_green()
+{
+  switch(gcount){
+  case 0:
+    green_on = 1;
+    gcount = 1;
+    break;
+  case 1:
+    green_on = 0;
+    gcount = 0;
+    break;
+  }
+  led_update();
+}
+
+void toggle_green_dim()
+{
+  switch(gcount){
+  case 0:
+    green_on = 1;
+    gcount = 1;
+    break;
+  case 1:
+    green_on = 0;
+    gcount = 2;
+    break;
+  case 2:
+    green_on = 0;
+    gcount = 0;
+    break;
+  }
+  led_update();
+}
+
+void toggle_green_bright()
+{
+  switch(gcount){
+    case 0:
+      green_on = 1;
+      gcount = 1;
+      break;
+    case 1:
+      green_on = 1;
+      gcount = 2;
+      break;
+    case 2:
+      green_on = 0;
+      gcount = 0;
+      break;
+  }
+  led_update();
+}
+
+void toggle_green_off()
+{
+  green_on = 0;
+  led_update();
+}
+
+void green_dim(int level)
+{
+  switch(level){
+  case 0:
+    toggle_green_dim();
+    break;
+  case 1:
+    toggle_green();
+    break;
+  case 2:
+    toggle_green_bright();
+    break;
+  case 3:
+    toggle_green_off();
     break;
   }
 }

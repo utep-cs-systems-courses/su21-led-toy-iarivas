@@ -1,9 +1,11 @@
 #include <msp430.h>
 #include "stateMachines.h"
 #include "led.h"
+#include "buzzer.h"
 
 static char gcount = 0;
 static char rcount = 0;
+static char siren = 0; 
 
 void toggle_red()		/* always toggle! */
 {
@@ -158,3 +160,23 @@ void green_dim(int level)
     break;
   }
 }
+
+void toy_off(){ toggle_red_off(); toggle_green_off(); buzzer_set_period(0); }
+
+void police_siren()
+{
+  switch(siren){
+  case 0:
+    toggle_red();
+    buzzer_set_period(5000);
+    siren = 1;
+    break;
+  case 1:
+    toggle_green();
+    buzzer_set_period(1000);
+    siren = 0;
+    break; 
+  }
+}
+
+void state_reset(){ gcount = 0; rcount = 0; siren = 0; }

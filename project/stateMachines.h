@@ -11,5 +11,8 @@ void toggle_green_dim();
 void toggle_green_bright();
 void toggle_green_off();
 void green_dim(int level);
+void toy_off();
+void police_siren();
+void state_reset();
 
 #endif // included

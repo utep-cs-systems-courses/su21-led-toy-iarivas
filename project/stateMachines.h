@@ -14,5 +14,7 @@ void green_dim(int level);
 void toy_off();
 void police_siren();
 void state_reset();
+void first_song();
+void first_tune();
 
 #endif // included

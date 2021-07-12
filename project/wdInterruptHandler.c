@@ -13,7 +13,7 @@ void
 __interrupt_vec(WDT_VECTOR) WDT(){	/* 250 interrupts/sec */
 
   if(switch_state == 0){
-    toy_off();
+    if((time%5) == 0){ first_tune(); }
     if(time == 249){ time = 0; seq++; }
     if(seq == 8){ seq = 0; }
     else{
@@ -36,6 +36,8 @@ __interrupt_vec(WDT_VECTOR) WDT(){	/* 250 interrupts/sec */
     }
   }else if(++blink_count == 125 && switch_state == 1){
     police_siren(); blink_count = 0;
+  }else if(blink_count == 50 && switch_state == 2){
+    first_song(); blink_count = 0;
   }else if(switch_state == 3){
     toy_off(); state_reset(); time = 0; seq = 0;
   }

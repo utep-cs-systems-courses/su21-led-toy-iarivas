@@ -1,4 +1,4 @@
-#include <msp430.h>
+//#include <msp430.h>
 #include "stateMachines.h"
 #include "led.h"
 #include "buzzer.h"
@@ -6,6 +6,8 @@
 static char gcount = 0;
 static char rcount = 0;
 static char siren = 0; 
+static char note = 0;
+int song[] = {3824,3405,3033,2863,2551,2272,2026,0,0,0,0};
 
 void toggle_red()		/* always toggle! */
 {
@@ -179,4 +181,26 @@ void police_siren()
   }
 }
 
-void state_reset(){ gcount = 0; rcount = 0; siren = 0; }
+void first_tune()
+{
+  if(note == 10){ note = 0; }
+  else if((note % 2) == 0){
+    buzzer_set_period(0);
+  } 
+  buzzer_set_period(song[note]);
+  note++;
+}
+
+void first_song()
+{
+  if(note == 12){ note = 0; }
+  else if((note % 2) == 0){
+    buzzer_set_period(0);
+    toggle_green_bright();
+  }
+  if(song[note] != 0){ toggle_red(); }
+  buzzer_set_period(song[note]);
+  note++;
+}
+  
+void state_reset(){ gcount = 0; rcount = 0; siren = 0; note = 0;}
